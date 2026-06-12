@@ -299,6 +299,12 @@ textarea{resize:vertical;min-height:80px}
     </div>
 
     <div class="field-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" placeholder="e.g. hello@business.com" autocomplete="email">
+      <div class="err" id="err-email">Please enter a valid email address.</div>
+    </div>
+
+    <div class="field-group">
       <label for="business">Business Name</label>
       <input type="text" id="business" placeholder="e.g. The Corner Shop">
       <div class="err" id="err-business">Please enter your business name.</div>
@@ -575,6 +581,7 @@ function validate() {
   const checks = [
     {id:'name',     err:'err-name',    fn: v => v.trim().length >= 2},
     {id:'phone',    err:'err-phone',   fn: v => /^[\d\s\+\(\)]{7,15}$/.test(v.trim())},
+    {id:'email',    err:'err-email',   fn: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())},
     {id:'business', err:'err-business',fn: v => v.trim().length >= 2},
     {id:'address',  err:'err-address', fn: v => v.trim().length >= 5},
   ];
@@ -591,6 +598,7 @@ function handleSubmit() {
   if (!validate()) return;
   const name     = document.getElementById('name').value.trim();
   const phone    = document.getElementById('phone').value.trim();
+  const email    = document.getElementById('email').value.trim();
   const business = document.getElementById('business').value.trim();
   const address  = document.getElementById('address').value.trim();
   const notes    = document.getElementById('notes').value.trim();
@@ -606,6 +614,7 @@ function handleSubmit() {
     '',
     'Name: ' + name,
     'Phone: ' + phone,
+    'Email: ' + email,
     'Business: ' + business,
     'Address: ' + address,
     '',
@@ -627,11 +636,11 @@ function handleSubmit() {
 function resetForm() {
   document.getElementById('form-content').style.display = 'block';
   document.getElementById('success-view').style.display = 'none';
-  ['name','phone','business','address','notes'].forEach(function(id) {
+  ['name','phone','email','business','address','notes'].forEach(function(id) {
     document.getElementById(id).value = '';
     document.getElementById(id).classList.remove('invalid');
   });
-  ['err-name','err-phone','err-business','err-address'].forEach(function(id) {
+  ['err-name','err-phone','err-email','err-business','err-address'].forEach(function(id) {
     document.getElementById(id).style.display = 'none';
   });
   qtys.candy = 0; qtys.blueberry = 0; qtys.pistachio = 0;
